@@ -98,3 +98,84 @@ select e.ename,
         '无名') 中文名
 from emp e;
 
+select count(1)from emp;
+select sum(sal)from emp;
+select max(sal)from emp;
+select min(sal)from emp;
+select avg(sal)from emp;
+
+--分组查询
+--查询每个部门的平均工资
+--分组查询中，出现在group by后面的原始列，才能出现在select后面
+--没有出现在group by后面的列，想在select后面出现，必须加上聚合函数
+select e.deptno, avg(e.sal)
+from emp e
+group by e.deptno;
+
+--查询平均工资高于2000的部门
+--select 的别名不能在where中使用
+select e.deptno, avg(e.sal) asal
+from emp e
+group by e.deptno having avg(e.sal)>2000;
+
+--where过滤分组前的数据，having过滤分组后的数据
+select e.deptno,avg(e.sal)
+from emp e
+where e.sal>800 group by deptno;
+
+select e.deptno,avg(e.sal)
+from emp e
+where e.sal>800 group by deptno having avg(sal)>2000;
+
+--oracle专用外连接，+表示以那个表为基准
+select * from emp e, dept d
+where e.deptno(+) = d.deptno;
+
+--查询员工姓名，员工领导姓名 自连接
+--查询员工姓名,员工部门名称，员工领导姓名,领导部门名称
+select e.ename ename, m.ename mname, d.dname, d2.dname mgrName
+from emp e, emp m, dept d, dept d2
+where e.MGR = m.empno
+and e.deptno=d.deptno
+and m.deptno = d2.deptno;
+
+select * from emp where sal =
+(select sal from emp where ename = 'SCOTT');
+
+select * from emp where sal in
+(select sal from emp where deptno = 10);
+
+--查询每个部门最低工资，最低员工姓名，部门
+select t.deptno, t.msal, e.ename, d.dname
+from (select deptno, min(sal) msal from emp
+group by deptno) t, emp e, dept d
+where t.deptno = e.deptno and t.msal = e.sal
+and e.deptno = d.deptno;
+
+--oracle分页
+--排序操作会影响rownum顺序
+select rownum, e.* from emp e
+order by e.sal desc;
+--select 可以生成rownum
+select rownum,t.* from (
+select rownum, e.* from emp e
+order by e.sal desc) t;
+
+--emp表工资倒叙排列，每页5条数据
+--rownum不能写上大于一个正数
+select * from (
+select rownum rn,e.* from(
+select * from emp e order by e.sal desc
+) e where rownum<11)
+tt where rn>5;
+--创建索引
+--单列索引，触发条件, 必须是数据原始值，模糊查询，单行函数都会影响触发
+create index idx_ename on emp(ename);
+
+--create复合索引
+--触发条件，必须包含优先检索列中的原始值
+create index idx_enamejoy on emp(ename, job);
+
+create * from emp where ename='SCOTT' and job='xx'; --触发复合索引
+create * from emp where ename='SCOTT' or job='xx';--不触发索引
+create * from emp where ename='SCOTT'; --触发单列索引
