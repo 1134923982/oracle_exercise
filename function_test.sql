@@ -1,4 +1,4 @@
---´´½¨±í¿Õ¼ä
+--åˆ›å»ºè¡¨ç©ºé—´
 create tablespace tablespace1
 datafile 'D:\app\yu\tablespace1.dbf'
 size 100m
@@ -13,12 +13,12 @@ create user c##user1
 identified by 123456
 default tablespace tablespace1;
 
---¸øÓÃ»§ÊÚÈ¨
---oracleÊı¾İ¿âÖĞµÄ³£ÓÃ½ÇÉ«
---connect Á¬½Ó½ÇÉ«£¬»ù±¾½ÇÉ«
---resource ¿ª·¢Õß½ÇÉ«
--- dba ³¬¼¶¹ÜÀíÔ±½ÇÉ«
---¸øc##user1ÊÚÓèdba½ÇÉ«
+--ç»™ç”¨æˆ·æˆæƒ
+--oracleæ•°æ®åº“ä¸­çš„å¸¸ç”¨è§’è‰²
+--connect è¿æ¥è§’è‰²ï¼ŒåŸºæœ¬è§’è‰²
+--resource å¼€å‘è€…è§’è‰²
+-- dba è¶…çº§ç®¡ç†å‘˜è§’è‰²
+--ç»™c##user1æˆäºˆdbaè§’è‰²
 grant dba to c##user1;
 
 --create table
@@ -26,11 +26,11 @@ create table person(
   pid number(20),
   pname varchar2(10)
 );
---ĞŞ¸ÄÁĞÀàĞÍ
+--ä¿®æ”¹åˆ—ç±»å‹
  alter table person modify gender char(1);
- --ĞŞ¸ÄÁĞÃû
+ --ä¿®æ”¹åˆ—å
  alter table person rename column gender to sex;
- --É¾³ıÁĞ
+ --åˆ é™¤åˆ—
  alter table person drop column sex;
  
  insert into person (pid, pname) values (1,'haha');
@@ -40,8 +40,8 @@ create table person(
  update person set pname='xixi' where pid=1;
  commit;
 
---´´½¨ĞòÁĞ£¬Ä¬ÈÏ´Ó1¿ªÊ¼£¬ ĞòÁĞ²»ÕæµÄÊôÓÚÒ»ÕÅ±í
---dual: Ğé±í£¬Ö»ÊÇÎªÁË²¹È«Óï·¨¹æ·¶
+--åˆ›å»ºåºåˆ—ï¼Œé»˜è®¤ä»1å¼€å§‹ï¼Œ åºåˆ—ä¸çœŸçš„å±äºä¸€å¼ è¡¨
+--dual: è™šè¡¨ï¼Œåªæ˜¯ä¸ºäº†è¡¥å…¨è¯­æ³•è§„èŒƒ
 create sequence s_person;
 select s_person.nextval from dual;
 select s_person.currval from dual;
@@ -50,8 +50,8 @@ select s_person.currval from dual;
  insert into person (pid, pname) values (s_person.nextval,'haha');
  commit;
  
- --scottÓÃ»§£¬ ÃÜÂëtiger
- --½âËøscottÓÃ»§
+ --scottç”¨æˆ·ï¼Œ å¯†ç tiger
+ --è§£é”scottç”¨æˆ·
  alter user scott account unlock;
  
  select con_id, dbid, guid, name , open_mode from v$pdbs;
@@ -70,32 +70,32 @@ select to_char(sysdate, 'fm yyyy-mm-dd hh:mi:ss') from dual;
 select to_char(sysdate, 'fm yyyy-mm-dd hh24:mi:ss') from dual;
 
 select to_date('2019-10-13 14:37:', 'fm yyyy-mm-dd hh24:mi:ss') from dual;
---¸øemp±íÖĞÔ±¹¤ÆğÖĞÎÄÃû
+--ç»™empè¡¨ä¸­å‘˜å·¥èµ·ä¸­æ–‡å
 select e.ename,
   case e.ename
-    when 'SMITH' then '²ÜÔô'
-      when 'ALLEN' then '´óÖí'
-        else 'ÎŞÃû'
+    when 'SMITH' then 'æ›¹è´¼'
+      when 'ALLEN' then 'å¤§çŒª'
+        else 'æ— å'
           end
 from emp e;
 
---emp±íÖĞÔ±¹¤¹¤×Ê£¬¸ßÓÚ3000¸ß¹¤×Ê£¬¸ßÓÚ1500µÍÓÚ3000ÖĞµÈ£¬ÆäÓàµÍ¹¤×Ê
+--empè¡¨ä¸­å‘˜å·¥å·¥èµ„ï¼Œé«˜äº3000é«˜å·¥èµ„ï¼Œé«˜äº1500ä½äº3000ä¸­ç­‰ï¼Œå…¶ä½™ä½å·¥èµ„
 
 select e.ename, e.SAL,
   case
-    when e.sal>3000 then '¸ßÊÕÈë'
-      when e.sal>1500 then 'ÖĞµÈÊÕÈë'
-        else 'µÍÊÕÈë'
+    when e.sal>3000 then 'é«˜æ”¶å…¥'
+      when e.sal>1500 then 'ä¸­ç­‰æ”¶å…¥'
+        else 'ä½æ”¶å…¥'
           end
 from emp e;
 
---oracle×¨ÓÃÌõ¼ş±í´ïÊ½
---oracle³ıÁËÆğ±ğÃû£¬ÆäËû¶¼ÊÇµ¥ÒıºÅ£¬±ğÃû¿ÉÒÔ²»¼ÓÒıºÅ£¬ÓÃÁËÖ»ÄÜÓÃË«ÒıºÅ
+--oracleä¸“ç”¨æ¡ä»¶è¡¨è¾¾å¼
+--oracleé™¤äº†èµ·åˆ«åï¼Œå…¶ä»–éƒ½æ˜¯å•å¼•å·ï¼Œåˆ«åå¯ä»¥ä¸åŠ å¼•å·ï¼Œç”¨äº†åªèƒ½ç”¨åŒå¼•å·
 select e.ename,
   decode(e.ename,
-    'SMITH','²ÜÔô',
-      'ALLEN', '´óÖí',
-        'ÎŞÃû') ÖĞÎÄÃû
+    'SMITH','æ›¹è´¼',
+      'ALLEN', 'å¤§çŒª',
+        'æ— å') ä¸­æ–‡å
 from emp e;
 
 select count(1)from emp;
@@ -104,21 +104,21 @@ select max(sal)from emp;
 select min(sal)from emp;
 select avg(sal)from emp;
 
---·Ö×é²éÑ¯
---²éÑ¯Ã¿¸ö²¿ÃÅµÄÆ½¾ù¹¤×Ê
---·Ö×é²éÑ¯ÖĞ£¬³öÏÖÔÚgroup byºóÃæµÄÔ­Ê¼ÁĞ£¬²ÅÄÜ³öÏÖÔÚselectºóÃæ
---Ã»ÓĞ³öÏÖÔÚgroup byºóÃæµÄÁĞ£¬ÏëÔÚselectºóÃæ³öÏÖ£¬±ØĞë¼ÓÉÏ¾ÛºÏº¯Êı
+--åˆ†ç»„æŸ¥è¯¢
+--æŸ¥è¯¢æ¯ä¸ªéƒ¨é—¨çš„å¹³å‡å·¥èµ„
+--åˆ†ç»„æŸ¥è¯¢ä¸­ï¼Œå‡ºç°åœ¨group byåé¢çš„åŸå§‹åˆ—ï¼Œæ‰èƒ½å‡ºç°åœ¨selectåé¢
+--æ²¡æœ‰å‡ºç°åœ¨group byåé¢çš„åˆ—ï¼Œæƒ³åœ¨selectåé¢å‡ºç°ï¼Œå¿…é¡»åŠ ä¸Šèšåˆå‡½æ•°
 select e.deptno, avg(e.sal)
 from emp e
 group by e.deptno;
 
---²éÑ¯Æ½¾ù¹¤×Ê¸ßÓÚ2000µÄ²¿ÃÅ
---select µÄ±ğÃû²»ÄÜÔÚwhereÖĞÊ¹ÓÃ
+--æŸ¥è¯¢å¹³å‡å·¥èµ„é«˜äº2000çš„éƒ¨é—¨
+--select çš„åˆ«åä¸èƒ½åœ¨whereä¸­ä½¿ç”¨
 select e.deptno, avg(e.sal) asal
 from emp e
 group by e.deptno having avg(e.sal)>2000;
 
---where¹ıÂË·Ö×éÇ°µÄÊı¾İ£¬having¹ıÂË·Ö×éºóµÄÊı¾İ
+--whereè¿‡æ»¤åˆ†ç»„å‰çš„æ•°æ®ï¼Œhavingè¿‡æ»¤åˆ†ç»„åçš„æ•°æ®
 select e.deptno,avg(e.sal)
 from emp e
 where e.sal>800 group by deptno;
@@ -127,12 +127,12 @@ select e.deptno,avg(e.sal)
 from emp e
 where e.sal>800 group by deptno having avg(sal)>2000;
 
---oracle×¨ÓÃÍâÁ¬½Ó£¬+±íÊ¾ÒÔÄÇ¸ö±íÎª»ù×¼
+--oracleä¸“ç”¨å¤–è¿æ¥ï¼Œ+è¡¨ç¤ºä»¥é‚£ä¸ªè¡¨ä¸ºåŸºå‡†
 select * from emp e, dept d
 where e.deptno(+) = d.deptno;
 
---²éÑ¯Ô±¹¤ĞÕÃû£¬Ô±¹¤Áìµ¼ĞÕÃû ×ÔÁ¬½Ó
---²éÑ¯Ô±¹¤ĞÕÃû,Ô±¹¤²¿ÃÅÃû³Æ£¬Ô±¹¤Áìµ¼ĞÕÃû,Áìµ¼²¿ÃÅÃû³Æ
+--æŸ¥è¯¢å‘˜å·¥å§“åï¼Œå‘˜å·¥é¢†å¯¼å§“å è‡ªè¿æ¥
+--æŸ¥è¯¢å‘˜å·¥å§“å,å‘˜å·¥éƒ¨é—¨åç§°ï¼Œå‘˜å·¥é¢†å¯¼å§“å,é¢†å¯¼éƒ¨é—¨åç§°
 select e.ename ename, m.ename mname, d.dname, d2.dname mgrName
 from emp e, emp m, dept d, dept d2
 where e.MGR = m.empno
@@ -145,37 +145,40 @@ select * from emp where sal =
 select * from emp where sal in
 (select sal from emp where deptno = 10);
 
---²éÑ¯Ã¿¸ö²¿ÃÅ×îµÍ¹¤×Ê£¬×îµÍÔ±¹¤ĞÕÃû£¬²¿ÃÅ
+--æŸ¥è¯¢æ¯ä¸ªéƒ¨é—¨æœ€ä½å·¥èµ„ï¼Œæœ€ä½å‘˜å·¥å§“åï¼Œéƒ¨é—¨
 select t.deptno, t.msal, e.ename, d.dname
 from (select deptno, min(sal) msal from emp
 group by deptno) t, emp e, dept d
 where t.deptno = e.deptno and t.msal = e.sal
 and e.deptno = d.deptno;
 
---oracle·ÖÒ³
---ÅÅĞò²Ù×÷»áÓ°ÏìrownumË³Ğò
+--oracleåˆ†é¡µ
+--æ’åºæ“ä½œä¼šå½±å“rownumé¡ºåº
 select rownum, e.* from emp e
 order by e.sal desc;
---select ¿ÉÒÔÉú³Érownum
+--select å¯ä»¥ç”Ÿæˆrownum
 select rownum,t.* from (
 select rownum, e.* from emp e
 order by e.sal desc) t;
 
---emp±í¹¤×Êµ¹ĞğÅÅÁĞ£¬Ã¿Ò³5ÌõÊı¾İ
---rownum²»ÄÜĞ´ÉÏ´óÓÚÒ»¸öÕıÊı
+--empè¡¨å·¥èµ„å€’å™æ’åˆ—ï¼Œæ¯é¡µ5æ¡æ•°æ®
+--rownumä¸èƒ½å†™ä¸Šå¤§äºä¸€ä¸ªæ­£æ•°
 select * from (
 select rownum rn,e.* from(
 select * from emp e order by e.sal desc
 ) e where rownum<11)
 tt where rn>5;
---´´½¨Ë÷Òı
---µ¥ÁĞË÷Òı£¬´¥·¢Ìõ¼ş, ±ØĞëÊÇÊı¾İÔ­Ê¼Öµ£¬Ä£ºı²éÑ¯£¬µ¥ĞĞº¯Êı¶¼»áÓ°Ïì´¥·¢
+--åˆ›å»ºç´¢å¼•
+--å•åˆ—ç´¢å¼•ï¼Œè§¦å‘æ¡ä»¶, å¿…é¡»æ˜¯æ•°æ®åŸå§‹å€¼ï¼Œæ¨¡ç³ŠæŸ¥è¯¢ï¼Œå•è¡Œå‡½æ•°éƒ½ä¼šå½±å“è§¦å‘
 create index idx_ename on emp(ename);
 
---create¸´ºÏË÷Òı
---´¥·¢Ìõ¼ş£¬±ØĞë°üº¬ÓÅÏÈ¼ìË÷ÁĞÖĞµÄÔ­Ê¼Öµ
+--createå¤åˆç´¢å¼•
+--è§¦å‘æ¡ä»¶ï¼Œå¿…é¡»åŒ…å«ä¼˜å…ˆæ£€ç´¢åˆ—ä¸­çš„åŸå§‹å€¼
 create index idx_enamejoy on emp(ename, job);
 
-create * from emp where ename='SCOTT' and job='xx'; --´¥·¢¸´ºÏË÷Òı
-create * from emp where ename='SCOTT' or job='xx';--²»´¥·¢Ë÷Òı
-create * from emp where ename='SCOTT'; --´¥·¢µ¥ÁĞË÷Òı
+create * from emp where ename='SCOTT' and job='xx'; --è§¦å‘å¤åˆç´¢å¼•
+create * from emp where ename='SCOTT' or job='xx';--ä¸è§¦å‘ç´¢å¼•
+create * from emp where ename='SCOTT'; --è§¦å‘å•åˆ—ç´¢å¼•
+
+--instr('ç›®æ ‡å­—ç¬¦ä¸²'ï¼ŒåŒ¹é…çš„å­—ç¬¦)ï¼Œè¿”å›åŒ¹é…å­—ç¬¦çš„ä¸‹æ ‡
+select SUBSTR('jayden zhang',INSTR('jayden zhang', ' ')+1,1) value from dual;
