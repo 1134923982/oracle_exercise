@@ -1,3 +1,6 @@
+--https://blog.csdn.net/u013816709/article/details/82022244
+
+
 --创建表空间
 create tablespace tablespace1
 datafile 'D:\app\yu\tablespace1.dbf'
