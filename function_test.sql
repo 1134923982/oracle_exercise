@@ -1,4 +1,7 @@
 --https://blog.csdn.net/u013816709/article/details/82022244
+--https://jingyan.baidu.com/article/11c17a2cd07ccdf446e39df6.html 导入导出数据
+--查看oracle service
+select name,pdb from v$services;
 
 
 --创建表空间
