@@ -1,5 +1,8 @@
 --https://blog.csdn.net/u013816709/article/details/82022244
 --https://jingyan.baidu.com/article/11c17a2cd07ccdf446e39df6.html 导入导出数据
+--export dmp file for oracle data
+exp username/password@host:1521/service file=path\1_db.dmp log=path\exp1.log
+
 --查看oracle service
 select name,pdb from v$services;
 
